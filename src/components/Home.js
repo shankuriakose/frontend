@@ -1,3 +1,5 @@
+// Home.js
+
 import React, { useEffect, useMemo, useState } from "react";
 import AxiosInstance from "./Axios";
 import { MaterialReactTable } from "material-react-table";
@@ -21,7 +23,9 @@ const Home = () => {
     GetData();
   }, []);
 
-  const baseUrl = "https://shankuriakose.pythonanywhere.com"; // Replace with your actual base URL
+  // const baseUrl = "http://localhost:8000"; // Replace with your actual base URL
+
+  const baseUrl = "https://shankuriakose.pythonanywhere.com";
 
   const columns = useMemo(
     () => [
@@ -34,7 +38,7 @@ const Home = () => {
             <img
               src={`${baseUrl}${row.original.picture}`}
               alt={row.original.name}
-              style={{ width: "50px", borderRadius: "50%" }}
+              style={{ width: "40px", borderRadius: "50%" }}
             />
           </Link>
         ),
@@ -95,7 +99,7 @@ const Home = () => {
         <MaterialReactTable
           columns={columns}
           data={myData}
-          rowHeight={0.75}
+          rowHeight={30} // Adjust the row height as per your preference
         />
       )}
     </div>
