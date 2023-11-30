@@ -23,7 +23,7 @@ const Home = () => {
     GetData();
   }, []);
 
-  const baseUrl = "http://localhost:8000"; // Replace with your actual base URL
+  const baseUrl = ""https://shankuriakose.pythonanywhere.com"; // Replace with your actual base URL
 
   const columns = useMemo(
     () => [
