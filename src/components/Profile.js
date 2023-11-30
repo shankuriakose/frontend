@@ -10,6 +10,7 @@ const Profile = () => {
     name: "",
     designation: "",
     organisation: "",
+    email: "",
     picture: null,
     picturePreview: "",
   });
@@ -62,7 +63,7 @@ const Profile = () => {
           width="100"
         />
         <h4>{profileData.name}</h4>
-        <p>{profileData.designation}</p>
+        <p>{profileData.email}</p>
       </div>
       <div className="right">
         <div className="info">

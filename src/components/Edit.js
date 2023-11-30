@@ -19,11 +19,22 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
+    borderRadius: "10px",
+    padding: theme.spacing(2),
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
     cursor: "pointer",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    width: theme.spacing(9), // Make the Avatar 1.5 times bigger
+    height: theme.spacing(9), // Make the Avatar 1.5 times bigger
+  },
+  smallAvatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    marginLeft: theme.spacing(1),
   },
   form: {
     width: "100%",
@@ -35,10 +46,20 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: "none",
   },
-  preview: {
-    maxWidth: "150px",
-    maxHeight: "120px",
-    marginTop: "20px",
+  cameraButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(2),
+  },
+  cameraIcon: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    transform: "translate(40%, 40%)", // Adjust position to intersect at 4 o'clock
+  },
+  registerButton: {
+    width: "100%", // Set the button width to 100%
   },
 }));
 
@@ -49,6 +70,7 @@ const Edit = () => {
     name: "",
     designation: "",
     organisation: "",
+    email: "",
     about: "",
     areas_of_interest: "",
     picture: null,
@@ -125,7 +147,8 @@ const Edit = () => {
       formData.append("name", profileData.name);
       formData.append("designation", profileData.designation);
       formData.append("organisation", profileData.organisation);
-      formData.append("about", profileData.about); // Add this line
+      formData.append("email", profileData.email);
+      formData.append("about", profileData.about);
       formData.append("areas_of_interest", profileData.areas_of_interest);
 
       if (profileData.picture) {
@@ -152,22 +175,26 @@ const Edit = () => {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar
-          className={classes.avatar}
-          src={profileData.picturePreview || ""}
-          alt={profileData.name}
-          onClick={() => document.getElementById("post-picture").click()}
-        >
-          {profileData.picturePreview ? (
-            <img
-              src={profileData.picturePreview}
-              alt="Profile"
-              className={classes.preview}
-            />
-          ) : (
-            <PersonIcon />
-          )}
-        </Avatar>
+        {/* Profile Picture */}
+        {profileData.picturePreview && (
+          <Avatar
+            className={classes.avatar}
+            src={profileData.picturePreview}
+            alt={profileData.name}
+            onClick={() => document.getElementById("post-picture").click()}
+          />
+        )}
+
+        {/* Small Camera Picture Preview */}
+        {/* {profileData.picturePreview && (
+          <Avatar
+            className={classes.smallAvatar}
+            src={profileData.picturePreview}
+            alt="Camera Preview"
+          />
+        )} */}
+
+        {/* Input for uploading picture */}
         <input
           accept="image/*"
           className={classes.input}
@@ -185,9 +212,8 @@ const Edit = () => {
             <PhotoCameraIcon />
           </IconButton>
         </label>
-        <Typography component="h1" variant="h5">
-          Edit Profile
-        </Typography>
+
+        {/* Form */}
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -231,6 +257,18 @@ const Edit = () => {
                 variant="outlined"
                 required
                 fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                value={profileData.organisation}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
                 id="about"
                 label="About"
                 name="about"
@@ -251,17 +289,22 @@ const Edit = () => {
               />
             </Grid>
           </Grid>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleUpdate}
-            disabled={loading}
-          >
-            {loading ? "Updating..." : "Update Profile"}
-          </Button>
+
+          {/* Camera Icon and Update Button */}
+          <div className={classes.cameraButton}>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.registerButton}
+              onClick={handleUpdate}
+              disabled={loading}
+            >
+              {loading ? "Updating..." : "Update Profile"}
+            </Button>
+          </div>
+
           {error && <Typography color="error">{error}</Typography>}
         </form>
       </div>

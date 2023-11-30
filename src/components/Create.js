@@ -1,5 +1,6 @@
+import "./Register.css";
 import React, { useState } from "react";
-import AxiosInstance from "./Axios"; // Make sure to import AxiosInstance
+import AxiosInstance from "./Axios";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -18,10 +19,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: "8px",
+    padding: theme.spacing(4),
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
   form: {
     width: "100%",
@@ -33,19 +40,31 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: "none",
   },
-  preview: {
-    maxWidth: "150px",
-    maxHeight: "120px",
-    marginTop: "20px",
+  transparentInput: {
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
+  },
+  cameraButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(2),
+  },
+  cameraIcon: {
+    marginRight: theme.spacing(1),
+    width: "30%",
+  },
+  registerButton: {
+    width: "70%",
   },
 }));
 
-export default function Create() {
+export default function Register() {
   const navigate = useNavigate();
   const initialFormData = Object.freeze({
     name: "",
     designation: "",
     organisation: "",
+    email: "",
     about: "",
     areas_of_interest: "",
   });
@@ -88,6 +107,9 @@ export default function Create() {
       formData.append("name", postData.name);
       formData.append("designation", postData.designation);
       formData.append("organisation", postData.organisation);
+      formData.append("email", postData.email);
+      formData.append("about", postData.about);
+      formData.append("areas_of_interest", postData.areas_of_interest);
       formData.append("picture", postPicture.picture[0]);
 
       const response = await AxiosInstance.post("profiles/", formData);
@@ -110,14 +132,20 @@ export default function Create() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}></Avatar>
+        {/* Avatar or Image Preview */}
+        {imagePreview ? (
+          <Avatar alt="Preview" src={imagePreview} className={classes.avatar} />
+        ) : (
+          <Avatar className={classes.avatar}>A</Avatar>
+        )}
         <Typography component="h1" variant="h5">
           Create New Profile
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                className={classes.transparentInput}
                 variant="outlined"
                 required
                 fullWidth
@@ -127,8 +155,9 @@ export default function Create() {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                className={classes.transparentInput}
                 variant="outlined"
                 required
                 fullWidth
@@ -138,8 +167,9 @@ export default function Create() {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
+                className={classes.transparentInput}
                 variant="outlined"
                 required
                 fullWidth
@@ -149,60 +179,77 @@ export default function Create() {
                 onChange={handleChange}
               />
             </Grid>
-            <input
-              accept="image/*"
-              className={classes.input}
-              id="post-picture"
-              onChange={handleChange}
-              name="picture"
-              type="file"
-            />
+            <Grid item xs={12} sm={6}>
+              <TextField
+                className={classes.transparentInput}
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                className={classes.transparentInput}
+                variant="outlined"
+                required
+                fullWidth
+                id="about"
+                label="About"
+                name="about"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                className={classes.transparentInput}
+                variant="outlined"
+                required
+                fullWidth
+                id="areas_of_interest"
+                label="Areas of Interest"
+                name="areas_of_interest"
+                onChange={handleChange}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="about"
-              label="About"
-              name="about"
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="areas_of_interest"
-              label="Areas of Interest"
-              name="areas_of_interst"
-              onChange={handleChange}
-            />
-          </Grid>
-          <label htmlFor="post-picture">
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="span"
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
-          {imagePreview && (
-            <img src={imagePreview} alt="" className={classes.preview} />
-          )}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Create Post"}
-          </Button>
+          <div className={classes.cameraButton}>
+            <Grid item xs={12} sm={4} className={classes.cameraIcon}>
+              <input
+                accept="image/*"
+                className={classes.input}
+                id="post-picture"
+                onChange={handleChange}
+                name="picture"
+                type="file"
+              />
+              <label htmlFor="post-picture">
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                >
+                  <PhotoCamera />
+                </IconButton>
+              </label>
+            </Grid>
+            <Grid item xs={12} sm={8} className={classes.registerButton}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Register"}
+              </Button>
+            </Grid>
+          </div>
           {error && <Typography color="error">{error}</Typography>}
         </form>
       </div>

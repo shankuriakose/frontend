@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Edit from "./components/Edit";
 import Delete from "./components/Delete";
 import Profile from "./components/Profile";
+import Register from "./components/Create";
 
 function App() {
   const myWidth = 220;
@@ -19,6 +20,8 @@ function App() {
             <Route path="" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/create" element={<Create />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/edit/:id" element={<Edit />} />
             <Route path="/delete/:id" element={<Delete />} />
 

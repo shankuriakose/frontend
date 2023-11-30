@@ -57,6 +57,11 @@ const Home = () => {
         size: 200,
       },
       {
+        accessorKey: "email",
+        header: "Work Email",
+        size: 200,
+      },
+      {
         accessorKey: "actions",
         header: "Actions",
         size: 100,
