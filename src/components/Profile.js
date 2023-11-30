@@ -67,7 +67,7 @@ const Profile = () => {
         <p>{profileData.email}</p>
         <div className="data" style={{ paddingTop: "50px" }}>
           <h4>About</h4>
-          <p>{profileData.about}</p>
+          <h5>{profileData.about}</h5>
         </div>
       </div>
       <div className="right">
