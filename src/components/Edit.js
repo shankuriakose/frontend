@@ -260,7 +260,7 @@ const Edit = () => {
                 id="email"
                 label="Email"
                 name="email"
-                value={profileData.organisation}
+                value={profileData.email}
                 onChange={handleChange}
               />
             </Grid>
