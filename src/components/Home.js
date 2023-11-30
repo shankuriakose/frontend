@@ -5,8 +5,6 @@ import { Box, IconButton } from "@mui/material";
 import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-// ... (your existing imports)
-
 const Home = () => {
   const [myData, setMydata] = useState();
   const [loading, setLoading] = useState(true);
@@ -23,18 +21,18 @@ const Home = () => {
     GetData();
   }, []);
 
-  const baseUrl = ""https://shankuriakose.pythonanywhere.com"; // Replace with your actual base URL
+  const baseUrl = "https://shankuriakose.pythonanywhere.com"; // Replace with your actual base URL
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: "picture", // Updated accessorKey for the profile picture
+        accessorKey: "picture",
         header: "Profile Picture",
         size: 100,
         Cell: ({ row }) => (
           <Link to={`/profile/${row.original.id}`}>
             <img
-              src={`${baseUrl}${row.original.picture}`} // Prepend base URL to the image URL
+              src={`${baseUrl}${row.original.picture}`}
               alt={row.original.name}
               style={{ width: "50px", borderRadius: "50%" }}
             />
@@ -86,7 +84,7 @@ const Home = () => {
         ),
       },
     ],
-    [baseUrl] // Include baseUrl as a dependency
+    [baseUrl]
   );
 
   return (
@@ -97,7 +95,7 @@ const Home = () => {
         <MaterialReactTable
           columns={columns}
           data={myData}
-          rowHeight={0.75} // Set the row height to 75% of the default height
+          rowHeight={0.75}
         />
       )}
     </div>
