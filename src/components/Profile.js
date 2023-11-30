@@ -27,7 +27,8 @@ const Profile = () => {
         });
 
         if (response.data.picture) {
-          const baseUrl = "http://localhost:8000";
+        //   const baseUrl = "http://localhost:8000";
+          const baseUrl = "https://shankuriakose.pythonanywhere.com";
           const imageUrl = `${baseUrl}${response.data.picture}`;
           setProfileData((prevData) => ({
             ...prevData,
@@ -85,7 +86,7 @@ const Profile = () => {
           <div className="projects_data">
             <div className="data">
               <h4>{profileData.areasOfInterest}</h4>
-              <p>Lorem ipsum dolor sit amet.</p>
+              <p>{profileData.about}</p>
             </div>
           </div>
         </div>
