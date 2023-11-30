@@ -87,7 +87,7 @@ const Edit = () => {
         });
 
         if (response.data.picture) {
-          const baseUrl = ""https://shankuriakose.pythonanywhere.com";
+          const baseUrl = "https://shankuriakose.pythonanywhere.com";
           const imageUrl = `${baseUrl}${response.data.picture}`;
 
           setProfileData((prevData) => ({
