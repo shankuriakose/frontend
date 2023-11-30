@@ -11,7 +11,7 @@ const Delete = () => {
   const [loading, setLoading] = useState(true);
 
   const GetData = () => {
-    AxiosInstance.get(`project/${MyId}`).then((res) => {
+    AxiosInstance.get(`profiles/${MyId}`).then((res) => {
       setMydata(res.data);
       console.log(res.data);
       setLoading(false);
@@ -25,7 +25,7 @@ const Delete = () => {
   const navigate = useNavigate();
 
   const submission = (data) => {
-    AxiosInstance.delete(`project/${MyId}/`).then((res) => {
+    AxiosInstance.delete(`profiles/${MyId}/`).then((res) => {
       navigate(`/`);
     });
   };
@@ -46,7 +46,7 @@ const Delete = () => {
             }}
           >
             <Typography sx={{ marginLeft: "20px", color: "#fff" }}>
-              Delete project: {myData.name}
+              Delete Profile: {myData.name}
             </Typography>
           </Box>
 
@@ -66,7 +66,7 @@ const Delete = () => {
                 marginBottom: "40px",
               }}
             >
-              Are you sure that you want to delete this project: {myData.name}
+              Are you sure that you want to delete this Profile: {myData.name}
             </Box>
 
             <Box sx={{ width: "30%" }}>
@@ -75,7 +75,7 @@ const Delete = () => {
                 onClick={submission}
                 sx={{ width: "100%" }}
               >
-                Delete the project
+                Delete the profile
               </Button>
             </Box>
           </Box>

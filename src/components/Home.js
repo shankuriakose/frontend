@@ -1,17 +1,18 @@
-import { React, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AxiosInstance from "./Axios";
 import { MaterialReactTable } from "material-react-table";
-import Dayjs from "dayjs";
 import { Box, IconButton } from "@mui/material";
 import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+
+// ... (your existing imports)
 
 const Home = () => {
   const [myData, setMydata] = useState();
   const [loading, setLoading] = useState(true);
 
   const GetData = () => {
-    AxiosInstance.get(`project/`).then((res) => {
+    AxiosInstance.get(`profiles/`).then((res) => {
       setMydata(res.data);
       console.log(res.data);
       setLoading(false);
@@ -22,35 +23,65 @@ const Home = () => {
     GetData();
   }, []);
 
+  const baseUrl = "http://localhost:8000"; // Replace with your actual base URL
+
   const columns = useMemo(
     () => [
       {
-        accessorKey: "name", //access nested data with dot notation
+        accessorKey: "picture", // Updated accessorKey for the profile picture
+        header: "Profile Picture",
+        size: 100,
+        Cell: ({ row }) => (
+          <Link to={`/profile/${row.original.id}`}>
+            <img
+              src={`${baseUrl}${row.original.picture}`} // Prepend base URL to the image URL
+              alt={row.original.name}
+              style={{ width: "50px", borderRadius: "50%" }}
+            />
+          </Link>
+        ),
+      },
+      {
+        accessorKey: "name",
         header: "Name",
         size: 150,
       },
       {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "designation",
+        header: "Designation",
         size: 150,
       },
       {
-        accessorKey: "comments", //normal accessorKey
-        header: "Comments",
+        accessorKey: "organisation",
+        header: "Organisation",
         size: 200,
       },
       {
-        accessorFn: (row) => Dayjs(row.start_date).format("DD-MM-YYYY"),
-        header: "Start date",
-        size: 150,
-      },
-      {
-        accessorFn: (row) => Dayjs(row.end_date).format("DD-MM-YYYY"),
-        header: "End date",
-        size: 150,
+        accessorKey: "actions",
+        header: "Actions",
+        size: 100,
+        Cell: ({ row }) => (
+          <Box sx={{ display: "flex", flexWrap: "nowrap", gap: "8px" }}>
+            <IconButton
+              color="secondary"
+              component={Link}
+              to={`/edit/${row.original.id}`}
+            >
+              <EditIcon />
+            </IconButton>
+
+            <IconButton
+              color="error"
+              component={Link}
+              to={`/delete/${row.original.id}`}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        ),
       },
     ],
-    []
+    [baseUrl] // Include baseUrl as a dependency
   );
 
   return (
@@ -61,26 +92,7 @@ const Home = () => {
         <MaterialReactTable
           columns={columns}
           data={myData}
-          enableRowActions
-          renderRowActions={({ row }) => (
-            <Box sx={{ display: "flex", flexWrap: "nowrap", gap: "8px" }}>
-              <IconButton
-                color="secondary"
-                component={Link}
-                to={`/edit/${row.original.id}`}
-              >
-                <EditIcon />
-              </IconButton>
-
-              <IconButton
-                color="error"
-                component={Link}
-                to={`/delete/${row.original.id}`}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          )}
+          rowHeight={0.75} // Set the row height to 75% of the default height
         />
       )}
     </div>
