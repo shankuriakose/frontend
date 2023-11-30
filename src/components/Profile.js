@@ -11,6 +11,7 @@ const Profile = () => {
     designation: "",
     organisation: "",
     email: "",
+    areas_of_interest: "",
     picture: null,
     picturePreview: "",
   });
@@ -27,7 +28,6 @@ const Profile = () => {
         });
 
         if (response.data.picture) {
-        //   const baseUrl = "http://localhost:8000";
           const baseUrl = "https://shankuriakose.pythonanywhere.com";
           const imageUrl = `${baseUrl}${response.data.picture}`;
           setProfileData((prevData) => ({
@@ -65,6 +65,10 @@ const Profile = () => {
         />
         <h4>{profileData.name}</h4>
         <p>{profileData.email}</p>
+        <div className="data" style={{ paddingTop: "50px" }}>
+          <h4>About</h4>
+          <p>{profileData.about}</p>
+        </div>
       </div>
       <div className="right">
         <div className="info">
@@ -85,8 +89,8 @@ const Profile = () => {
           <h3>Areas of Interest</h3>
           <div className="projects_data">
             <div className="data">
-              <h4>{profileData.areasOfInterest}</h4>
-              <p>{profileData.about}</p>
+              <h4>{profileData.areas_of_interest}</h4>
+              {/* <p>{profileData.areas_of_interest}</p> */}
             </div>
           </div>
         </div>
